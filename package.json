@@ -1,0 +1,29 @@
+{
+  "name": "Fallout4CharacterCreation",
+  "version": "1.0.0",
+  "description": "Project for Cloud Computing (CS475)",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "mongodb": "^2.0.48",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^0.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benjaminRomano/Fallout4CharacterCreation.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/benjaminRomano/Fallout4CharacterCreation/issues"
+  },
+  "homepage": "https://github.com/benjaminRomano/Fallout4CharacterCreation"
+}
