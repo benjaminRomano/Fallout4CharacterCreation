@@ -19,11 +19,8 @@ module.exports = function(passport, userService) {
     }, function(token, refreshToken, profile, done) {
 
         process.nextTick(function() {
-
-            userService.get(profile.id, function(err, user) {
-                if (err)
-                    return done(err);
-                if (user) {
+            userService.get(profile.id).then(function(user){
+                if(user) {
                     return done(null, user);
                 }
 
@@ -31,14 +28,15 @@ module.exports = function(passport, userService) {
                     id: profile.id,
                     token: token,
                     name: profile.displayName,
-                    email: profile.emails[0].value
+                    email: profile.emails[0].value,
+                    characters: []
                 };
 
-                userService.save(newUser, function(err, user) {
-                    if (err)
-                        done(err);
-                    return done(null, newUser);
+                userService.create(newUser).then(function(user) {
+                    return done(null, user);
                 });
+            }).catch(function(err) {
+                done(err);
             });
         });
 

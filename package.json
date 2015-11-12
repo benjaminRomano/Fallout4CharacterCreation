@@ -9,7 +9,8 @@
     "express": "^4.13.3",
     "mongodb": "^2.0.48",
     "passport": "^0.3.2",
-    "passport-google-oauth": "^0.2.0"
+    "passport-google-oauth": "^0.2.0",
+    "q": "^1.4.1"
   },
   "devDependencies": {},
   "scripts": {

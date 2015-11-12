@@ -24,8 +24,8 @@ Controller.prototype.setup = function() {
 
     this.router.get('/google/callback',
         this.passport.authenticate('google', {
-            successRedirect: '/',
-            failureRedirect: '/login'
+            successRedirect: '/characterCreator',
+            failureRedirect: '/auth/login'
         })
     );
 };
