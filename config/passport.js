@@ -1,6 +1,6 @@
 
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var configAuth = require('./auth');
+var authConfig = require('./auth');
 
 module.exports = function(passport, userService) {
 
@@ -8,14 +8,18 @@ module.exports = function(passport, userService) {
         done(null, user.id);
     });
 
-    passport.deserializeUser(function(user, done) {
-        done(null, user);
+    passport.deserializeUser(function(id, done) {
+        userService.get(id).then(function(user) {
+            done(null, user);
+        }).catch(function(err){
+            done(err);
+        });
     });
 
     passport.use(new GoogleStrategy({
-        clientID: configAuth.googleAuth.clientID,
-        clientSecret: configAuth.googleAuth.clientSecret,
-        callbackURL: configAuth.googleAuth.callbackURL
+        clientID: authConfig.googleAuth.clientID,
+        clientSecret: authConfig.googleAuth.clientSecret,
+        callbackURL: authConfig.googleAuth.callbackURL
     }, function(token, refreshToken, profile, done) {
 
         process.nextTick(function() {

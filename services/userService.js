@@ -56,4 +56,25 @@ UserService.prototype.get = function(id) {
     return deferred.promise;
 };
 
+UserService.prototype.getByEmail = function(email) {
+    var deferred = Q.defer();
+
+    this.collection.findOne({ email: email }, function(err, user) {
+        if (err) {
+            deferred.reject(err);
+            return;
+        }
+
+        if(user) {
+            delete user._id;
+            calhost
+        }
+
+        deferred.resolve(user);
+    });
+
+    return deferred.promise;
+};
+
+
 module.exports = UserService;

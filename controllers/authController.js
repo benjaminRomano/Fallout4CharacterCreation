@@ -5,6 +5,12 @@ var Controller =  function(router, passport) {
 };
 
 Controller.prototype.setup = function() {
+
+    //Settings aren't inherited, so you need to set them again...
+    this.router.set('view engine', 'html');
+    this.router.set('views', require('path').join(__dirname, '/../app/views'));
+    this.router.engine('html', require('ejs').renderFile);
+
     this.router.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/login');
@@ -15,7 +21,12 @@ Controller.prototype.setup = function() {
     });
 
     this.router.get('/login', function(req, res) {
-        res.render('login.ejs');
+        if(req.user) {
+            res.redirect('/characterCreator');
+            return;
+        }
+
+        res.render('login.html');
     });
 
     this.router.get('/google',
