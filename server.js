@@ -6,10 +6,12 @@ var session = require('express-session');
 var db = require('./db');
 var authConfig = require('./config/auth');
 
+
 var UserDb = require('./dbs/userDb');
 var CharacterDb = require('./dbs/characterDb');
 
 var CoreService = require('./services/coreService');
+var SocketService = require('./services/socketService');
 
 var CharacterController = require('./controllers/characterController');
 var AuthController = require('./controllers/authController');
@@ -27,6 +29,11 @@ function setupServer(db) {
     var coreService = new CoreService(userDb, characterDb);
 
     var app = express();
+
+    var http = require('http').Server(app);
+    var io = require('socket.io')(http);
+    var socketService = new SocketService(io);
+
     app.set('view engine', 'html');
     app.set('views', require('path').join(__dirname, 'app/views'));
     app.engine('html', require('ejs').renderFile);
@@ -52,8 +59,9 @@ function setupServer(db) {
         res.render('app.html');
     });
 
-    app.listen(8080);
-    console.log('App listening on port 8080');
+    http.listen(8080, function(){
+        console.log('App listening on port 8080');
+    });
 }
 
 

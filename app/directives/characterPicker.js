@@ -1,8 +1,8 @@
 
 angular.module('characterCreator')
-    .directive('characterPicker', ['coreService', characterPicker]);
+    .directive('characterPicker', ['coreService', 'socketService', characterPicker]);
 
-function characterPicker(coreService) {
+function characterPicker(coreService, socketService) {
     return {
         restrict: 'E',
         templateUrl: 'partials/characterPicker.html',
@@ -21,16 +21,5 @@ function characterPicker(coreService) {
                 scope.setActiveCharacter(character.id);
             });
         };
-
-        scope.setActiveCharacter = function(id) {
-            for(var i = 0; i < scope.characters.length; i++) {
-                if(scope.characters[i].id === id) {
-                    scope.activeCharacterIndex = i;
-                    scope.activeCharacter = scope.characters[i];
-                    scope.activeCharacterIndex = i;
-                }
-            }
-        };
-
     }
 }

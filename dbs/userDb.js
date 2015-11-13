@@ -33,23 +33,22 @@ UserDb.prototype.addCharacterById = function(characterId, userId) {
 UserDb.prototype.addCharacterByEmail = function(characterId, email) {
     var self = this;
     return this.getByEmail(email).then(function(user) {
-        if(user) {
-
-            //Verify user doesn't already character
-            for(var i = 0; i < user.characters; i++) {
-                if(user.characters[i].id === characterId) {
-                    return user;
-                }
-            }
-
-            user.characters.push(characterId);
-            return self.update(user);
+        if(!user) {
+            return self.createUser({
+                email: email,
+                characters: [characterId]
+            });
         }
 
-        return self.createUser({
-            email: email,
-            characters: [characterId]
-        });
+        //Verify user doesn't already character
+        for(var i = 0; i < user.characters; i++) {
+            if(user.characters[i].id === characterId) {
+                return user;
+            }
+        }
+
+        user.characters.push(characterId);
+        return self.update(user);
     });
 };
 

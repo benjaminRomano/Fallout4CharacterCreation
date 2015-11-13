@@ -1,2 +1,2 @@
 
-var app = angular.module('characterCreator', []);
+var app = angular.module('characterCreator', ['btford.socket-io']);

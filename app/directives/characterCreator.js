@@ -1,8 +1,8 @@
 
 angular.module('characterCreator')
-    .directive('characterCreator', ['coreService', characterCreator]);
+    .directive('characterCreator', ['coreService', 'socketService', '$timeout', characterCreator]);
 
-function characterCreator(coreService) {
+function characterCreator(coreService, socketService, $timeout) {
     return {
         restrict: 'E',
         templateUrl: 'partials/characterCreator.html',
@@ -10,10 +10,13 @@ function characterCreator(coreService) {
     };
 
     function link(scope, element, attrs) {
-        var saveChanges = function() {
-            console.log('called');
+        scope.saveChanges = function() {
+            if(!scope.isSynced) {
+                return;
+            }
+
             scope.isSaving = true;
-            var promise = null;
+            var promise;
 
             if(!scope.activeCharacter.id) {
                 promise = coreService.createCharacter(scope.activeCharacter);
@@ -22,23 +25,11 @@ function characterCreator(coreService) {
             }
 
             promise.then(function() {
+                socketService.emit('resync');
                 scope.isSaving = false;
             }, function() {
-                scope.isSaving = false;
+                //TODO: Handle save failed
             });
         };
-
-        scope.activeCharacterChanged = saveChanges;
-
-        scope.$watch('activeCharacter', function(activeCharacter, oldValue) {
-            if(oldValue === activeCharacter) {
-                return;
-            }
-
-            saveChanges();
-        });
-
     }
-
-
 }

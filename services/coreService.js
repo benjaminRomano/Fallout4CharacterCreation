@@ -1,7 +1,7 @@
 
 var uuid = require('node-uuid');
 
-var CoreService = function(userDb, characterDb) {
+var CoreService = function(userDb, characterDb, socketService) {
     this.userDb = userDb;
     this.characterDb = characterDb;
 };

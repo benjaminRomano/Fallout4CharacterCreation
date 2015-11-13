@@ -25,6 +25,11 @@ module.exports = {
 };
 ```
 
+Get dependencies
+```bash
+$ npm install
+```
+
 Start the server:
 ```bash
 $ mongod
