@@ -1,0 +1,7 @@
+<div ng-if='activeCharacter'>
+    <span>name: </span>
+    <input type='text' ng-change="activeCharacterChanged()" ng-model='activeCharacter.name'></input>
+    <br>
+    <span>level: </span>
+    <input type='text' ng-change="activeCharacterChanged()" ng-model='activeCharacter.level'></input>
+</div>

@@ -2,14 +2,14 @@
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var authConfig = require('./auth');
 
-module.exports = function(passport, userService) {
+module.exports = function(passport, coreService) {
 
     passport.serializeUser(function(user, done) {
         done(null, user.id);
     });
 
     passport.deserializeUser(function(id, done) {
-        userService.get(id).then(function(user) {
+        coreService.getUser(id).then(function(user) {
             done(null, user);
         }).catch(function(err){
             done(err);
@@ -23,7 +23,7 @@ module.exports = function(passport, userService) {
     }, function(token, refreshToken, profile, done) {
 
         process.nextTick(function() {
-            userService.get(profile.id).then(function(user){
+            coreService.getUser(profile.id).then(function(user){
                 if(user) {
                     return done(null, user);
                 }
@@ -36,7 +36,7 @@ module.exports = function(passport, userService) {
                     characters: []
                 };
 
-                userService.create(newUser).then(function(user) {
+                coreService.createUser(newUser).then(function(user) {
                     return done(null, user);
                 });
             }).catch(function(err) {

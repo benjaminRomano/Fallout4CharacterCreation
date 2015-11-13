@@ -1,11 +1,10 @@
 var Q = require('q');
 
-var UserService = function(db) {
-    this.db = db;
+var UserDb = function(db) {
     this.collection = db.collection('users');
 };
 
-UserService.prototype.create = function(user) {
+UserDb.prototype.create = function(user) {
     var deferred = Q.defer();
 
     this.collection.insertOne(user, function(err) {
@@ -21,7 +20,40 @@ UserService.prototype.create = function(user) {
     return deferred.promise;
 };
 
-UserService.prototype.update = function(user) {
+UserDb.prototype.addCharacterById = function(characterId, userId) {
+    var self = this;
+    return this.get(userId).then(function(user) {
+        user.characters.push(characterId);
+        return self.update(user).then(function(user) {
+            return user;
+        });
+    });
+};
+
+UserDb.prototype.addCharacterByEmail = function(characterId, email) {
+    var self = this;
+    return this.getByEmail(email).then(function(user) {
+        if(user) {
+
+            //Verify user doesn't already character
+            for(var i = 0; i < user.characters; i++) {
+                if(user.characters[i].id === characterId) {
+                    return user;
+                }
+            }
+
+            user.characters.push(characterId);
+            return self.update(user);
+        }
+
+        return self.createUser({
+            email: email,
+            characters: [characterId]
+        });
+    });
+};
+
+UserDb.prototype.update = function(user) {
     var deferred = Q.defer();
 
     this.collection.update({id: user.id}, user, function(err) {
@@ -37,7 +69,7 @@ UserService.prototype.update = function(user) {
     return deferred.promise;
 };
 
-UserService.prototype.get = function(id) {
+UserDb.prototype.get = function(id) {
     var deferred = Q.defer();
 
     this.collection.findOne({ id: id }, function(err, user) {
@@ -56,7 +88,7 @@ UserService.prototype.get = function(id) {
     return deferred.promise;
 };
 
-UserService.prototype.getByEmail = function(email) {
+UserDb.prototype.getByEmail = function(email) {
     var deferred = Q.defer();
 
     this.collection.findOne({ email: email }, function(err, user) {
@@ -67,7 +99,6 @@ UserService.prototype.getByEmail = function(email) {
 
         if(user) {
             delete user._id;
-            calhost
         }
 
         deferred.resolve(user);
@@ -77,4 +108,4 @@ UserService.prototype.getByEmail = function(email) {
 };
 
 
-module.exports = UserService;
+module.exports = UserDb;

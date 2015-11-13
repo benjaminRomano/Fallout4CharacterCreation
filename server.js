@@ -6,8 +6,10 @@ var session = require('express-session');
 var db = require('./db');
 var authConfig = require('./config/auth');
 
-var UserService = require('./services/userService');
-var CharacterService = require('./services/characterService');
+var UserDb = require('./dbs/userDb');
+var CharacterDb = require('./dbs/characterDb');
+
+var CoreService = require('./services/coreService');
 
 var CharacterController = require('./controllers/characterController');
 var AuthController = require('./controllers/authController');
@@ -17,9 +19,12 @@ db.connect().then(setupServer).catch(function(err) {
 });
 
 function setupServer(db) {
+    //Dbs
+    var userDb = new UserDb(db);
+    var characterDb = new CharacterDb(db);
+
     //Services
-    var userService = new UserService(db);
-    var characterService = new CharacterService(db);
+    var coreService = new CoreService(userDb, characterDb);
 
     var app = express();
     app.set('view engine', 'html');
@@ -27,7 +32,7 @@ function setupServer(db) {
     app.engine('html', require('ejs').renderFile);
 
     //Middleware
-    require('./config/passport')(passport, userService);
+    require('./config/passport')(passport, coreService);
     app.use(express.static('app'));
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(session({ secret: authConfig.sessionSecret, resave: false, saveUninitialized: true }));
@@ -36,8 +41,8 @@ function setupServer(db) {
     app.use(passport.session());
 
     //Controllers
-    app.use('api/character', new CharacterController(express()).router);
-    app.use('/auth', new AuthController(express(), passport).router);
+    app.use('/api/character', new CharacterController(express(), coreService).router);
+    app.use('/auth', new AuthController(express(), passport, coreService).router);
 
     app.get('/', loggedIn, function(req, res) {
         res.redirect('/characterCreator');

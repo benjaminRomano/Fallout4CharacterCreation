@@ -1,0 +1,6 @@
+
+<button ng-click='createCharacter()' ng-disabled='isSaving' class='btn'>New Character</button>
+<div ng-repeat='character in characters' ng-click='setActiveCharacter(character.id)' style="height: 20px;">
+    <span ng-if="!character.name">MISSING NAME</span>
+    <span ng-if="character.name">{{character.name}}</span>
+</div>
