@@ -9,6 +9,12 @@ function mainController($scope, coreService, socketService, $timeout) {
     $scope.isSaving = false;
     $scope.isSynced = true;
 
+    coreService.getSpecials().then(function(specials) {
+        $scope.specials = specials;
+    }).catch(function(){
+        //TODO: Handle error
+    });
+
     $scope.setActiveCharacter = function(id) {
         if($scope.activeCharacter && $scope.activeCharacter.id === id) {
             return;
@@ -22,6 +28,7 @@ function mainController($scope, coreService, socketService, $timeout) {
                 //TODO: Handle failed get
             });
     };
+
 
     socketService.on('resync', function() {
         $scope.isSynced = false;
@@ -58,7 +65,7 @@ function mainController($scope, coreService, socketService, $timeout) {
 
         if($scope.characters.length) {
             $scope.activeCharacter = $scope.characters[0];
-            socketService.emit('joinRoom', $scope.user.id);
+            socketService.emit('joinRoom', $scope.activeCharacter.id);
         }
     });
 }

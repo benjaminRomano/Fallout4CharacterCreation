@@ -8,7 +8,8 @@ function coreService($http) {
         getCharacter: getCharacter,
         updateCharacter: updateCharacter,
         addPermissions: addPermissions,
-        getUserInfo: getUserInfo
+        getUserInfo: getUserInfo,
+        getSpecials: getSpecials
     };
 
     function createCharacter(character) {
@@ -40,6 +41,12 @@ function coreService($http) {
 
     function getUserInfo() {
         return $http.get('/auth/info').then(function(response) {
+            return response.data;
+        });
+    }
+
+    function getSpecials() {
+        return $http.get('/data/specials.json').then(function(response) {
             return response.data;
         });
     }

@@ -3,5 +3,6 @@
     <input type='text' ng-disabled='!isSynced' ng-change="saveChanges()" ng-model='activeCharacter.name'></input>
     <br>
     <span>level: </span>
-    <input ng-disabled='!isSynced' type='text' ng-change="saveChanges()" ng-model='activeCharacter.level'></input>
+    <increment-input can-decrement="canDecrementLevel()" can-increment="canIncrementLevel()" decrement="decrementLevel()" increment="incrementLevel()" value="activeCharacter.level"></increment-input>
+    <special-table></special-table>
 </div>

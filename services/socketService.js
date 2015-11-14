@@ -27,7 +27,6 @@ SocketService.prototype.setup = function() {
         });
 
         socket.on('resync', function() {
-            console.log('called');
             socket.broadcast.to(socket.room).emit('resync');
         });
 

@@ -12,6 +12,8 @@
     <script src='app.js'></script>
     <script src='services/socketService.js'></script>
     <script src='services/coreService.js'></script>
+    <script src='directives/specialTable.js'></script>
+    <script src='directives/incrementInput.js'></script>
     <script src='controllers/mainController.js'></script>
     <script src='directives/characterCreator.js'></script>
     <script src='directives/characterPicker.js'></script>
@@ -19,7 +21,7 @@
 </head>
 <body ng-app='characterCreator'>
     <div ng-controller='MainController'>
-    <div class='container'>
+    <div class='container-fluid'>
         <a href='/auth/logout' class='btn btn-danger'>Logout</a>
         <div class='jumbotron text-center'>
             <h1><span></span>Welcome to Fallout 4 Character Creator!</h1>
@@ -27,13 +29,13 @@
         </div>
         <div ng-if='user'>
             <div class='row text-center'>
-                <div class='col-md-4'>
+                <div class='col-md-2'>
                     <character-picker></character-picker>
                 </div>
-                <div class='col-md-4'>
+                <div class='col-md-8'>
                     <character-creator></character-creator>
                 </div>
-                <div class='col-md-4'>
+                <div class='col-md-2'>
                     <permission-adder></permision-adder>
                 </div>
             </div>
