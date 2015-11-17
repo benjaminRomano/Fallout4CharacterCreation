@@ -5,35 +5,54 @@ angular.module('characterCreator')
 function mainController($scope, coreService, socketService, $timeout) {
     $scope.user = null;
     $scope.characters = [];
-    $scope.activeCharacter = null;
+    $scope.character = null;
     $scope.isSaving = false;
     $scope.isSynced = true;
 
-    coreService.getSpecials().then(function(specials) {
-        $scope.specials = specials;
-    }).catch(function(){
-        //TODO: Handle error
-    });
+    $scope.isReady = function() {
+        return $scope.isSynced;
+    };
 
-    $scope.setActiveCharacter = function(id) {
-        if($scope.activeCharacter && $scope.activeCharacter.id === id) {
+    $scope.setCharacter = function(id) {
+        if($scope.character && $scope.character.id === id) {
             return;
         }
 
         coreService.getCharacter(id)
             .then(updateCharacter)
             .then(function() {
-                socketService.emit('joinRoom', $scope.activeCharacter.id);
+                socketService.emit('joinRoom', $scope.character.id);
             }).catch(function() {
                 //TODO: Handle failed get
             });
     };
 
+    $scope.saveChanges = function() {
+        if(!$scope.isSynced) {
+            return;
+        }
+
+        $scope.isSaving = true;
+        var promise;
+
+        if(!$scope.character.id) {
+            promise = coreService.createCharacter($scope.character);
+        } else {
+            promise = coreService.updateCharacter($scope.character);
+        }
+
+        promise.then(function() {
+            socketService.emit('resync');
+            $scope.isSaving = false;
+        }, function() {
+            //TODO: Handle save failed
+        });
+    };
 
     socketService.on('resync', function() {
         $scope.isSynced = false;
 
-        coreService.getCharacter($scope.activeCharacter.id)
+        coreService.getCharacter($scope.character.id)
             .then(updateCharacter)
             .then(function() {
                 $timeout(function() {
@@ -45,7 +64,7 @@ function mainController($scope, coreService, socketService, $timeout) {
     });
 
     function updateCharacter(updatedCharacter) {
-        $scope.activeCharacter = updatedCharacter;
+        $scope.character = updatedCharacter;
 
         var index = 0;
         for(var i = 0; i < $scope.characters.length; i++) {
@@ -64,8 +83,8 @@ function mainController($scope, coreService, socketService, $timeout) {
         $scope.characters = userInfo.characters;
 
         if($scope.characters.length) {
-            $scope.activeCharacter = $scope.characters[0];
-            socketService.emit('joinRoom', $scope.activeCharacter.id);
+            $scope.character = $scope.characters[0];
+            socketService.emit('joinRoom', $scope.character.id);
         }
     });
 }

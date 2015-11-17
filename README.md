@@ -17,12 +17,17 @@ Create file db.js in the config folder
 ```js
 module.exports = {
     'dev': {
-        url: "mongodb://localhost:27017/charCreation"
+        url: 'mongodb://localhost:27017/charCreation',
+        redisHost: 'localhost',
+        redisPort: '6379'
     },
     'production' : {
-        url: "mongodb://localhost:27017/charCreation"
+        url: 'mongodb://localhost:27017/charCreation',
+        redisHost: 'localhost',
+        redisPort: '6379'
     }
 };
+
 ```
 
 Get dependencies

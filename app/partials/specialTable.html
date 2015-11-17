@@ -1,10 +1,12 @@
-<div ng-if="specials && activeCharacter.specials">
+<div ng-if="specials && character.specials">
     <div style="display:inline-block; margin-right: 50px" ng-repeat="(specialName, special) in specials | orderBy: 'special.order'">
         <span>{{specialName | uppercase}}</span>
-        <increment-input can-decrement="canDecrement(specialName)" can-increment="canIncrement(specialName)" decrement="decrement(specialName)" increment="increment(specialName)" value='activeCharacter.specials[specialName].value'></increment-input>
+        <increment-input can-decrement="canDecrement(specialName)" can-increment="canIncrement(specialName)" decrement="decrement(specialName)" increment="increment(specialName)" value='character.specials[specialName].value'></increment-input>
+        <!-- add special images here -->
         <div  style="display:" ng-repeat="(perkName, perk) in special.perks | orderBy: 'perk.order'">
             <span>{{perkName}}</span>
-            <increment-input  can-decrement="canDecrement(specialName, perkName)" can-increment="canIncrement(specialName, perkName)" decrement="decrement(specialName, perkName)" increment="increment(specialName, perkName)" value='activeCharacter.specials[specialName].perks[perkName].value'></increment-input>
+            <!-- add  perk level descriptions on increment/decrement buttons -->
+            <increment-input  can-decrement="canDecrement(specialName, perkName)" can-increment="canIncrement(specialName, perkName)" decrement="decrement(specialName, perkName)" increment="increment(specialName, perkName)" value='character.specials[specialName].perks[perkName].value'></increment-input>
         </div>
     </div>
 </div>

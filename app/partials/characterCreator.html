@@ -1,8 +1,8 @@
-<div ng-if='activeCharacter'>
+<div ng-if='character'>
     <span>name: </span>
-    <input type='text' ng-disabled='!isSynced' ng-change="saveChanges()" ng-model='activeCharacter.name'></input>
+    <input type='text' ng-disabled='!isReady()' ng-change="saveChanges()" ng-model='character.name'></input>
     <br>
     <span>level: </span>
-    <increment-input can-decrement="canDecrementLevel()" can-increment="canIncrementLevel()" decrement="decrementLevel()" increment="incrementLevel()" value="activeCharacter.level"></increment-input>
-    <special-table></special-table>
+    <increment-input can-decrement="canDecrementLevel()" can-increment="canIncrementLevel()" decrement="decrementLevel()" increment="incrementLevel()" value="character.level"></increment-input>
+    <special-table save-changes="saveChanges" is-ready="isReady" character="character"></special-table>
 </div>

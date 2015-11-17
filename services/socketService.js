@@ -1,4 +1,7 @@
 
+var redis = require('socket.io-redis');
+var dbConfig = require('../config/db');
+
 var SocketService = function(io) {
     this.io = io;
     this.setup();
@@ -6,6 +9,9 @@ var SocketService = function(io) {
 };
 
 SocketService.prototype.setup = function() {
+
+    this.io.adapter(redis({ host: 'localhost', port: 6379 }));
+
     this.io.on('connection', function(socket) {
         console.log('connected');
 

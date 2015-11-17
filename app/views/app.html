@@ -10,6 +10,8 @@
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js'></script>
     <script src='scripts/socket.min.js'></script>
     <script src='app.js'></script>
+    <script src='constants/specials.js'></script>
+    <script src='constants/character.js'></script>
     <script src='services/socketService.js'></script>
     <script src='services/coreService.js'></script>
     <script src='directives/specialTable.js'></script>
@@ -30,13 +32,13 @@
         <div ng-if='user'>
             <div class='row text-center'>
                 <div class='col-md-2'>
-                    <character-picker></character-picker>
+                    <character-picker character="character" characters="characters" is-ready="isReady" set-character="setCharacter"></character-picker>
                 </div>
                 <div class='col-md-8'>
-                    <character-creator></character-creator>
+                    <character-creator is-ready="isReady" save-changes="saveChanges" character="character"></character-creator>
                 </div>
                 <div class='col-md-2'>
-                    <permission-adder></permision-adder>
+                    <permission-adder character="character"></permision-adder>
                 </div>
             </div>
         </div>

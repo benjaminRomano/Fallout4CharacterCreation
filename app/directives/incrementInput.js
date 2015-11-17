@@ -6,8 +6,6 @@ function incrementInput(coreService) {
     return {
         restrict: 'E',
         scope: {
-            specialName: '=',
-            name: '=',
             value: '=',
             canIncrement: '&',
             canDecrement: '&',

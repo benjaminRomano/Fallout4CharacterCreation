@@ -5,13 +5,20 @@ angular.module('characterCreator')
 function permissionAdder(coreService) {
     return {
         restrict: 'E',
+        scope: {
+            character: '='
+        },
         templateUrl: 'partials/permissionAdder.html',
         link: link
     };
 
     function link(scope, element, attrs) {
         scope.addPermissions = function() {
-            coreService.addPermissions(scope.activeCharacter.id, scope.email);
+            if(!scope.email || !scope.character) {
+                return;
+            }
+            
+            coreService.addPermissions(scope.character.id, scope.email);
         };
     }
 }
