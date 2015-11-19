@@ -1,6 +1,8 @@
 
-<button ng-click='createCharacter()' ng-disabled='!isReady()' class='btn'>New Character</button>
-<div ng-repeat='character in characters' ng-click='setCharacter(character.id)' style="height: 20px;">
-    <span ng-if="!character.name">MISSING NAME</span>
-    <span ng-if="character.name">{{character.name}}</span>
+<div>
+    <button class="btn btn-default" ng-click='createCharacter()' ng-disabled='!isReady()'> New Character</button>
+    <div ng-repeat='character in characters' ng-click='setCharacter(character.id)' style="height: 20px;">
+        <span class="pipboy-text character-selector" ng-if="!character.name">MISSING NAME</span>
+        <span class="pipboy-text character-selector" ng-if="character.name">{{character.name}}</span>
+    </div>
 </div>

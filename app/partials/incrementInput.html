@@ -1,3 +1,3 @@
-<button ng-disabled="!canDecrement()" ng-click="decrement()">-</button>
-<span>{{value}}</span>
-<button ng-disabled="!canIncrement()" ng-click="increment()">+</button>
+<button class="btn btn-default" ng-disabled="!canDecrement()" ng-class="{'disabled-button': !canDecrement() }" ng-click="decrement()">-</button>
+<span class="pipboy-text">{{value}}</span>
+<button class="btn btn-default" ng-disabled="!canIncrement()" ng-class="{'disabled-button': !canIncrement() }" ng-click="increment()">+</button>

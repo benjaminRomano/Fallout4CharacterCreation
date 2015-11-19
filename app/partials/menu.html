@@ -1,0 +1,6 @@
+<div class="row">
+    <div class="col-sm-3" ng-repeat="option in menuOptions">
+        <span ng-class="{ 'menu-selector-active': option === mode }" ng-click="setMode(option)" class="centered pipboy-text menu-selector">{{option}}</span>
+    </div>
+    <hr width="90%">
+</div>

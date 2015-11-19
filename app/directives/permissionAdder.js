@@ -17,8 +17,8 @@ function permissionAdder(coreService) {
             if(!scope.email || !scope.character) {
                 return;
             }
-            
             coreService.addPermissions(scope.character.id, scope.email);
+            scope.email = "";
         };
     }
 }

@@ -955,7 +955,7 @@ angular.module('characterCreator')
                 }
             }
         },
-        "intelligenece":{
+        "intelligence":{
             "order":4,
             "perks":{
                 "VANS":{

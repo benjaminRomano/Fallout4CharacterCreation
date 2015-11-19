@@ -145,7 +145,7 @@ angular.module('characterCreator')
                     },
                     'value':0
                 },
-                'intelligenece':{
+                'intelligence':{
                     'perks':{
                         'VANS':{
                             'value':0

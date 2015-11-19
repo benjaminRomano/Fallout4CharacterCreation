@@ -15,56 +15,30 @@ function specialTable(coreService, SPECIALS) {
     };
 
     function link(scope, element, attrs) {
+        console.log(SPECIALS);
         scope.specials = SPECIALS;
+        scope.specialValues = [
+            "strength",
+            "perception",
+            "endurance",
+            "charisma",
+            "intelligence",
+            "agility",
+            "luck"
+        ];
 
-        scope.canDecrement = function(specialName, perkName) {
-            var special = scope.character.specials[specialName];
-            if(!perkName) {
-                return special.value > 0 && scope.isReady();
+        scope.activeSpecialIndex = 0;
+
+        scope.next = function() {
+            if(scope.activeSpecialIndex + 1 < scope.specialValues.length) {
+                scope.activeSpecialIndex++;
             }
-            var perk = special.perks[perkName];
-            return perk.value > 0 && scope.isReady();
-        };
+        }
 
-        scope.canIncrement = function(specialName, perkName) {
-            if(scope.character.pointsAvailable <= 0) {
-                return false;
+        scope.back = function() {
+            if(scope.activeSpecialIndex - 1 >= 0) {
+                scope.activeSpecialIndex--;
             }
-
-            var special = scope.character.specials[specialName];
-            if(!perkName) {
-                return true && scope.isReady();
-            }
-
-            var perk = special.perks[perkName];
-            var perkInfo = SPECIALS[specialName].perks[perkName];
-
-            return perkInfo.ranks[perk.value + 1] &&
-                perkInfo.ranks[perk.value + 1].playerLevelRequired <= scope.character.level &&
-                perkInfo.specialLevelRequired <= special.value && scope.isReady();
-        };
-
-        scope.increment = function(specialName, name) {
-            incrementOrDecrement(specialName, name, true);
-        };
-
-        scope.decrement = function(specialName, name) {
-            incrementOrDecrement(specialName, name, false);
-        };
-
-        function incrementOrDecrement(specialName, perkName, isIncrement) {
-            var special = scope.character.specials[specialName];
-            scope.character.pointsAvailable += isIncrement ? -1 : 1;
-
-            if(!perkName) {
-                special.value = special.value + (isIncrement ? 1 : -1);
-                scope.saveChanges();
-                return;
-            }
-
-            var perk = special.perks[perkName];
-            perk.value = perk.value + (isIncrement ? 1 : -1);
-            scope.saveChanges();
         }
     }
 }

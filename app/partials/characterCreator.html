@@ -1,8 +1,14 @@
-<div ng-if='character'>
-    <span>name: </span>
-    <input type='text' ng-disabled='!isReady()' ng-change="saveChanges()" ng-model='character.name'></input>
-    <br>
-    <span>level: </span>
-    <increment-input can-decrement="canDecrementLevel()" can-increment="canIncrementLevel()" decrement="decrementLevel()" increment="incrementLevel()" value="character.level"></increment-input>
-    <special-table save-changes="saveChanges" is-ready="isReady" character="character"></special-table>
+<div ng-if="character">
+            <span class="block pipboy-text">NAME</span>
+            <input class="form-control name-form centered" type='text' ng-disabled='!isReady()' ng-change="saveChanges()" ng-model='character.name'></input>
+            <span class="block pipboy-text">LEVEL</span>
+            <increment-input can-decrement="canDecrementLevel()"
+                can-increment="canIncrementLevel()"
+                decrement="decrementLevel()"
+                increment="incrementLevel()"
+                value="character.level"></increment-input>
+            <special-table save-changes="saveChanges" is-ready="isReady" character="character"></special-table>
+        </div>
+    </div>
+
 </div>

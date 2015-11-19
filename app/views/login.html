@@ -6,21 +6,34 @@
     <title>Node Authentication</title>
     <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'> <!-- load bootstrap css -->
     <link rel='stylesheet' href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'> <!-- load fontawesome -->
-    <style>
-        body        { padding-top:80px; }
-    </style>
+    <link rel='stylesheet' href='../css/styles.css'>
 </head>
-<body>
-<div class='container'>
+<body class="background no-select">
+    </br>
+    <div class='container-fluid'>
+        <div ng-if='user'>
+            <div class='row text-center'>
+                <div class='col-md-2'>
+                </div>
+                <div class="col-md-8">
+                    <div class="pipboy">
+                        <div class="pipboy-screen-border">
+                            <div class="pipboy-screen">
+                                <span class="pipboy-text">Login or Register with:</span>
 
-    <div class='jumbotron text-center'>
-        <h1><span class='fa fa-lock'></span> Node Authentication</h1>
-
-        <p>Login or Register with:</p>
-
-        <a href='/auth/google' class='btn btn-danger'><span class='fa fa-google-plus'></span> Google</a>
-
+                                <a class="btn btn-danger" href='/auth/google'>Google+</a>
+                            </div>
+                        </div>
+                        <div class="pipboy-symbol">
+                            <img alt src="http://data.simonschreibt.de/gat054/pipBoy_symbol.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+
 
 </div>
 </body>

@@ -1,13 +1,30 @@
 
 angular.module('characterCreator')
-    .controller('MainController', ['$scope', 'coreService', 'socketService', '$timeout', mainController]);
+    .controller('MainController', [
+        '$scope',
+        'coreService',
+        'socketService',
+        '$timeout',
+        '$location',
+        mainController]);
 
-function mainController($scope, coreService, socketService, $timeout) {
+function mainController($scope, coreService, socketService, $timeout, $location) {
     $scope.user = null;
     $scope.characters = [];
     $scope.character = null;
     $scope.isSaving = false;
     $scope.isSynced = true;
+    $scope.mode = "SELECTOR";
+    $scope.menuOptions = [
+        "SELECTOR",
+        "CREATOR",
+        "CHAT",
+        "PERMISSIONS"
+    ]
+
+    $scope.$on('$routeUpdate', function(){
+        console.log("changed");
+    });
 
     $scope.isReady = function() {
         return $scope.isSynced;
@@ -17,6 +34,8 @@ function mainController($scope, coreService, socketService, $timeout) {
         if($scope.character && $scope.character.id === id) {
             return;
         }
+
+        $location.path(id);
 
         coreService.getCharacter(id)
             .then(updateCharacter)
@@ -83,6 +102,8 @@ function mainController($scope, coreService, socketService, $timeout) {
         $scope.characters = userInfo.characters;
 
         if($scope.characters.length) {
+            $scope.mode = "CREATOR";
+            $location.path($scope.characters[0].id);
             $scope.character = $scope.characters[0];
             socketService.emit('joinRoom', $scope.character.id);
         }

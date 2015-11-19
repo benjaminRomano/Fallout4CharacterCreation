@@ -6,6 +6,7 @@
     <title>Node Authentication</title>
     <link rel='stylesheet' href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'> <!-- load bootstrap css -->
     <link rel='stylesheet' href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'> <!-- load fontawesome -->
+    <link rel='stylesheet' href='css/styles.css'>
     <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.7/angular.min.js'></script>
     <script src='scripts/socket.min.js'></script>
@@ -15,30 +16,46 @@
     <script src='services/socketService.js'></script>
     <script src='services/coreService.js'></script>
     <script src='directives/specialTable.js'></script>
+    <script src='directives/menu.js'></script>
+    <script src='directives/chat.js'></script>
+    <script src='directives/specialColumn.js'></script>
     <script src='directives/incrementInput.js'></script>
     <script src='controllers/mainController.js'></script>
     <script src='directives/characterCreator.js'></script>
     <script src='directives/characterPicker.js'></script>
     <script src='directives/permissionAdder.js'></script>
 </head>
-<body ng-app='characterCreator'>
+<body class="background no-select" ng-app='characterCreator'>
     <div ng-controller='MainController'>
+    </br>
     <div class='container-fluid'>
-        <a href='/auth/logout' class='btn btn-danger'>Logout</a>
-        <div class='jumbotron text-center'>
-            <h1><span></span>Welcome to Fallout 4 Character Creator!</h1>
-
-        </div>
         <div ng-if='user'>
             <div class='row text-center'>
                 <div class='col-md-2'>
-                    <character-picker character="character" characters="characters" is-ready="isReady" set-character="setCharacter"></character-picker>
                 </div>
-                <div class='col-md-8'>
-                    <character-creator is-ready="isReady" save-changes="saveChanges" character="character"></character-creator>
-                </div>
-                <div class='col-md-2'>
-                    <permission-adder character="character"></permision-adder>
+                <div class="col-md-8">
+                    <div class="pipboy">
+                        <div class="pipboy-screen-border">
+                            <div class="pipboy-screen">
+                                <menu menu-options="menuOptions" mode="mode"></menu>
+                                <div ng-show="mode === 'SELECTOR'" >
+                                    <character-picker character="character" characters="characters" is-ready="isReady" set-character="setCharacter"></character-picker>
+                                </div>
+                                <div ng-show="mode === 'CREATOR'" >
+                                    <character-creator is-ready="isReady" save-changes="saveChanges" character="character"></character-creator>
+                                </div>
+                                <div ng-show="mode === 'CHAT'" >
+                                    <chat user="user"></chat>
+                                </div>
+                                <div ng-show="mode === 'PERMISSIONS'" >
+                                    <permission-adder character="character"></permision-adder>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pipboy-symbol">
+                            <img alt src="http://data.simonschreibt.de/gat054/pipBoy_symbol.png">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

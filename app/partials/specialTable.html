@@ -1,12 +1,8 @@
 <div ng-if="specials && character.specials">
-    <div style="display:inline-block; margin-right: 50px" ng-repeat="(specialName, special) in specials | orderBy: 'special.order'">
-        <span>{{specialName | uppercase}}</span>
-        <increment-input can-decrement="canDecrement(specialName)" can-increment="canIncrement(specialName)" decrement="decrement(specialName)" increment="increment(specialName)" value='character.specials[specialName].value'></increment-input>
-        <!-- add special images here -->
-        <div  style="display:" ng-repeat="(perkName, perk) in special.perks | orderBy: 'perk.order'">
-            <span>{{perkName}}</span>
-            <!-- add  perk level descriptions on increment/decrement buttons -->
-            <increment-input  can-decrement="canDecrement(specialName, perkName)" can-increment="canIncrement(specialName, perkName)" decrement="decrement(specialName, perkName)" increment="increment(specialName, perkName)" value='character.specials[specialName].perks[perkName].value'></increment-input>
-        </div>
+    <div ng-repeat="(specialName, special) in specials | orderBy: 'special.order'">
+        <special-column ng-show="specialValues[activeSpecialIndex] === specialName" special="special" special-name="specialName" is-ready="isReady" save-changes="saveChanges" character="character"></special-column>
     </div>
+    <div class="pipboy-page-indicator inline-block" ng-click="back()">&lt;</div>
+    <div class="pipboy-page-number inline-block">{{activeSpecialIndex + 1}}</div>
+    <div class="pipboy-page-indicator inline-block" ng-click="next()">&gt;<div>
 </div>

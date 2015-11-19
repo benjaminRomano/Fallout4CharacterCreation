@@ -1,0 +1,20 @@
+<div>
+    <span class="pipboy-text block">{{specialName | uppercase}}</span>
+    <increment-input can-decrement="canDecrement(specialName)"
+        can-increment="canIncrement(specialName)"
+        decrement="decrement(specialName)"
+        increment="increment(specialName)"
+        value='character.specials[specialName].value'></increment-input>
+    <div class="row">
+        <div class="col-sm-3 special-square" ng-class="{centered: $index === 8 || $index === 9}" ng-repeat="(perkName, perk) in special.perks | orderBy: 'perk.order'">
+            <img class="perk-image" ng-src="{{perk.picUrl}}"></img>
+            <div class="pipboy-text">{{perkName}}</div>
+            <!-- add  perk level descriptions on increment/decrement buttons -->
+            <increment-input  can-decrement="canDecrement(specialName, perkName)"
+                can-increment="canIncrement(specialName, perkName)"
+                decrement="decrement(specialName, perkName)"
+                increment="increment(specialName, perkName)"
+                value='character.specials[specialName].perks[perkName].value'></increment-input>
+        </div>
+    </div>
+</div>

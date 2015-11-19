@@ -12,6 +12,7 @@ SocketService.prototype.setup = function() {
 
     this.io.adapter(redis({ host: 'localhost', port: 6379 }));
 
+    var self = this;
     this.io.on('connection', function(socket) {
         console.log('connected');
 
@@ -39,6 +40,10 @@ SocketService.prototype.setup = function() {
         socket.on('disconnect', function() {
             socket.broadcast.to(socket.room).emit('message', socket.name + ' left room');
             socket.leave(socket.room);
+        });
+
+        socket.on('message-sent', function(message) {
+            self.io.emit('message-received', message);
         });
     });
 };
