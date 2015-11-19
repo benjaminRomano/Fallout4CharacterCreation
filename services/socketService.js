@@ -10,7 +10,7 @@ var SocketService = function(io) {
 
 SocketService.prototype.setup = function() {
 
-    this.io.adapter(redis({ host: 'localhost', port: 6379 }));
+    this.io.adapter(redis({ host: dbConfig.redisHost, port: dbConfig.redisPort }));
 
     var self = this;
     this.io.on('connection', function(socket) {
