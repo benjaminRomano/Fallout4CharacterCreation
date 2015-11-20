@@ -1,6 +1,5 @@
 
-<input class="form-control name-form centered" type='text' ng-model="message"></input>
-<button ng-click="addMessage(message)" class="btn btn-default">Send</button>
+<input class="form-control name-form centered" type='text' ng-keypress="onKeypress($event)" ng-model="message"></input>
 <div>
     <span class="pipboy-text block text-left" ng-repeat="message in messages track by $index">{{message}}</span>
 </div>

@@ -23,8 +23,11 @@ function chat(socketService) {
             }
         });
 
-        scope.addMessage = function(message) {
-            socketService.emit('message-sent', scope.user.name + ": " + message);
-        }
+        scope.onKeypress = function(key) {
+            if(key.which === 13) {
+                socketService.emit('message-sent', scope.user.name + ": " + scope.message);
+                scope.message = "";
+            }
+        };
     }
 }
