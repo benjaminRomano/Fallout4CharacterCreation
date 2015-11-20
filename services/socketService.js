@@ -9,7 +9,10 @@ var SocketService = function(io) {
 };
 
 SocketService.prototype.setup = function() {
-
+    
+    var env = process.env.NODE_ENV || 'dev';
+    dbConfig = dbConfig[env];
+    
     this.io.adapter(redis({ host: dbConfig.redisHost, port: dbConfig.redisPort }));
 
     var self = this;
