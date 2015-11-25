@@ -3,7 +3,13 @@ var express = require('express');
 var passport = require('passport');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var redis = require('redis').createClient();
+var cookieParser = require('cookie-parser');
+var RedisStore = require('connect-redis')(session);
+var socketioRedis = require('passport-socketio-redis');
 var db = require('./db');
+var dbConfig = require('./config/db');
+dbConfig = dbConfig[process.env.NODE_ENV || 'dev'];
 var authConfig = require('./config/auth');
 
 
@@ -15,6 +21,9 @@ var SocketService = require('./services/socketService');
 
 var CharacterController = require('./controllers/characterController');
 var AuthController = require('./controllers/authController');
+
+
+
 
 db.connect().then(setupServer).catch(function(err) {
     console.log(err.message);
@@ -42,7 +51,29 @@ function setupServer(db) {
     require('./config/passport')(passport, coreService);
     app.use(express.static('app'));
     app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(session({ secret: authConfig.sessionSecret, resave: false, saveUninitialized: true }));
+    app.use(session({ 
+        secret: authConfig.sessionSecret,
+        key: 'connect.sid',
+        resave: true,
+        saveUninitialized: false,
+        store: new RedisStore({
+            host: dbConfig.redisHost,
+            port: dbConfig.redisPort,
+            client: redis
+        })
+    }));
+    
+    io.use(socketioRedis.authorize({
+        passport:passport,
+        cookieParser: cookieParser,
+        key:         'connect.sid',       
+        secret:      authConfig.sessionSecret,    
+        store:       new RedisStore({ 
+            host: dbConfig.redisHost,
+            port: dbConfig.redisPort,
+            client: redis })
+    }));
+    
     app.use(bodyParser.json());
     app.use(passport.initialize());
     app.use(passport.session());
@@ -58,9 +89,11 @@ function setupServer(db) {
     app.get('/characterCreator', loggedIn, function(req, res) {
         res.render('app.html');
     });
-
-    http.listen(8080, function(){
-        console.log('App listening on port 8080');
+    
+    
+    var port = 8080;
+    http.listen(port, function(){
+        console.log('App listening on port ' + port);
     });
 }
 
