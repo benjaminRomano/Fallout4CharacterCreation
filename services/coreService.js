@@ -1,3 +1,6 @@
+var nodemailer = require("nodemailer");
+var ses = require('nodemailer-ses-transport');
+var mailConfig = require('../config/mail.json');
 
 var uuid = require('node-uuid');
 
@@ -44,6 +47,26 @@ CoreService.prototype.addCharacterById = function(characterId, userId) {
 };
 
 CoreService.prototype.addCharacterByEmail = function(characterId, email) {
+    console.log('sending permission grant email to '+email);
+    console.log(mailConfig.region);
+    var transporter = nodemailer.createTransport(ses({
+        accessKeyId: mailConfig.accessKeyId,
+        secretAccessKey: mailConfig.secretAccessKey,
+        region : mailConfig.region
+    }));
+    transporter.sendMail({
+        from: mailConfig.from,
+        to: email,
+        subject: mailConfig.subject,
+        text: mailConfig.text+characterId
+     }, function(error, response){  //callback
+            if(error){
+                    console.log(error);
+            }else{
+                    console.log("Message sent: " + response.message);
+            }
+            transporter.close();
+    });
     return this.userDb.addCharacterByEmail(characterId, email);
 };
 
