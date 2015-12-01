@@ -31,6 +31,11 @@ module.exports = {
         redisPort: '6379'
     }
 };
+```
+Create file mail.json in the config folder, region can be us-eas-1 or us-west-2. The from email address must be verified with Amazon SES.
+```js
+{ "accessKeyId": "your_amazon_iam_accesskeyid", "secretAccessKey": "your_amazon_iam_secretaccesskey", "region": "us-west-2, "from": "from_email_address" , "subject" : "FO4 Character Permission Granted", "text" : "You have been granted write permissions to http://<yourwebaddress>/characterCreator#/"}
+
 
 ```
 
