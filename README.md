@@ -1,5 +1,8 @@
 # Fallout4CharacterCreation
 Project for Cloud Computing (CS475)
+![image](https://cloud.githubusercontent.com/assets/9221137/11495051/a98c48e4-97cd-11e5-89e5-fd67352f96ef.png)
+
+
 
 #### How to Run
 Create file auth.js in the config folder
