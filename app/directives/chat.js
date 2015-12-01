@@ -16,7 +16,6 @@ function chat(socketService) {
         scope.messages = [];
 
         socketService.on('message-received', function(message) {
-            console.log(message);
             scope.messages.push(message);
             if(scope.messages.length > 30) {
                 scope.messages.shift();

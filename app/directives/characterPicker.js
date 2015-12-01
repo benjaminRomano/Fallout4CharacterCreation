@@ -22,7 +22,5 @@ function characterPicker(coreService, CHARACTER) {
                 scope.setCharacter(character.id);
             });
         };
-
-
     }
 }

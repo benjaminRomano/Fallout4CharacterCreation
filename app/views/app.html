@@ -38,17 +38,17 @@
                         <div class="pipboy-screen-border">
                             <div class="pipboy-screen">
                                 <menu menu-options="menuOptions" mode="mode"></menu>
-                                <div ng-show="mode === 'SELECTOR'" >
+                                <div ng-show="mode.name === 'SELECTOR'" >
                                     <character-picker character="character" characters="characters" is-ready="isReady" set-character="setCharacter"></character-picker>
                                 </div>
-                                <div ng-show="mode === 'CREATOR'" >
+                                <div ng-show="mode.name === 'CREATOR'" >
                                     <character-creator is-ready="isReady" save-changes="saveChanges" character="character"></character-creator>
                                 </div>
-                                <div ng-show="mode === 'CHAT'" >
+                                <div ng-show="mode.name === 'CHAT'" >
                                     <chat user="user"></chat>
                                 </div>
-                                <div ng-show="mode === 'PERMISSIONS'" >
-                                    <permission-adder character="character"></permision-adder>
+                                <div ng-show="mode.name === 'PERMISSIONS'" >
+                                    <permission-adder character="character"></permission-adder>
                                 </div>
                             </div>
                         </div>

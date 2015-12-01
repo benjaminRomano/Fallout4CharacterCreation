@@ -76,10 +76,10 @@
 .pipboy-page-indicator:hover { color:#ffffff; }
 .pipboy-page-number { color:#6cff91; font-size:1.5em; line-height:1.2em; font-family:"Courier New", Courier, monospace;    }
 
-.pipboy a:link { color:#6cff91; text-decoration: underline; }
-.pipboy a:visited { color:#6cff91; text-decoration: underline; }
-.pipboy a:hover  { color:#ffffff; text-decoration: underline; }
-.pipboy a:active { color:#6cff91; text-decoration: underline; }
+.pipboy a:link { color:#6cff91; text-decoration: none; }
+.pipboy a:visited { color:#6cff91; text-decoration: none; }
+.pipboy a:hover  { color:#6cff91;; text-decoration: none; }
+.pipboy a:active { color:#6cff91; text-decoration: none; }
 @media only screen and (max-width: 650px) {
 .pipboy-headline { font-size:1.2em; }
 }
@@ -147,4 +147,14 @@
 
 .character-selector:hover {
     color:#ffffff;
+}
+
+.close-icon {
+    color: #6cff91;
+    font-size: 1.25em;
+    line-height: 1.2em;
+}
+
+.close-icon:hover {
+    color: red;
 }

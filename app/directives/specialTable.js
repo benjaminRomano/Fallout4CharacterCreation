@@ -15,7 +15,6 @@ function specialTable(coreService, SPECIALS) {
     };
 
     function link(scope, element, attrs) {
-        console.log(SPECIALS);
         scope.specials = SPECIALS;
         scope.specialValues = [
             "strength",

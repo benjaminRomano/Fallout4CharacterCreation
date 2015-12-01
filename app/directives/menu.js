@@ -15,7 +15,8 @@ function menu() {
 
     function link(scope, element, attrs) {
         scope.setMode = function(option) {
-            scope.mode = option;
+            scope.mode.name = option;
         }
+        
     }
 }

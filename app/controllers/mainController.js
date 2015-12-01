@@ -14,7 +14,7 @@ function mainController($scope, coreService, socketService, $timeout, $location)
     $scope.character = null;
     $scope.isSaving = false;
     $scope.isSynced = true;
-    $scope.mode = "SELECTOR";
+    $scope.mode = { name: "SELECTOR" };
     $scope.menuOptions = [
         "SELECTOR",
         "CREATOR",
@@ -22,19 +22,16 @@ function mainController($scope, coreService, socketService, $timeout, $location)
         "PERMISSIONS"
     ]
 
-    $scope.$on('$routeUpdate', function(){
-        console.log("changed");
-    });
-
     $scope.isReady = function() {
         return $scope.isSynced;
     };
-
+    
     $scope.setCharacter = function(id) {
+        $scope.mode.name = "CREATOR";
         if($scope.character && $scope.character.id === id) {
             return;
         }
-
+        
         $location.path(id);
 
         coreService.getCharacter(id)
@@ -102,7 +99,7 @@ function mainController($scope, coreService, socketService, $timeout, $location)
         $scope.characters = userInfo.characters;
 
         if($scope.characters.length) {
-            $scope.mode = "CREATOR";
+            $scope.mode.name = "CREATOR";
             $location.path($scope.characters[0].id);
             $scope.character = $scope.characters[0];
             socketService.emit('joinRoom', $scope.character.id);
